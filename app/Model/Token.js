@@ -1,11 +1,12 @@
 'use strict'
 
 const Lucid = use('Lucid')
+const User = use('App/Model/User')
 
 class Token extends Lucid {
 
   user () {
-    return this.belongsTo('App/Model/User')
+    return this.belongsTo(User)
   }
 
 }

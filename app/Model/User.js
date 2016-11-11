@@ -1,14 +1,15 @@
 'use strict'
 
 const Lucid = use('Lucid')
+const Token = use('App/Model/Token')
 
 class User extends Lucid {
 
   static get hidden () {
     return ['password']
   }
-  user () {
-    return this.hasMany('App/Model/Token')
+  apiTokens () {
+    return this.hasMany(Token)
   }
 }
 
