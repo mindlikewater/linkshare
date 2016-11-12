@@ -13,16 +13,20 @@ class UserController {
   }
 
   * login (request, response) {
+    //get username and password from user
     let data = request.only('username', 'password')
 
     try {
+      //find user by username in the database
       let user = yield User.findBy('username', data.username)
       //console.log(user, data.username)
 
-      //Note: If user is nul, this TypeErrors, which is caught below.
+      //Note: If user is null, this TypeErrors, which is caught below.
+      //Verify that the password given by the user matches the password in the database
       let verify = yield Hash.verify(data.password, user.password)
+      //If password input by the user doesn't match the datbabase password, throw error
       if (!verify) { throw new Error(); }
-
+      //generate an authorization token
       let token = yield request.auth.generate(user)
       user.access_token = token
 
