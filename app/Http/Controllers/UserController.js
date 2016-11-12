@@ -8,26 +8,28 @@ class UserController {
     let data = request.only('username', 'email', 'password')
     data.password = yield Hash.make(data.password)
     let user = yield User.create(data)
-
+    //console.log(user);
     response.status(201).json(user)
   }
 
   * login (request, response) {
     let data = request.only('username', 'password')
-    let user = yield User.findBy('username', data.username)
 
     try {
+      let user = yield User.findBy('username', data.username)
+      //console.log(user, data.username)
+
       //Note: If user is nul, this TypeErrors, which is caught below.
       let verify = yield Hash.verify(data.password, user.password)
       if (!verify) { throw new Error(); }
 
       let token = yield request.auth.generate(user)
-      user.access_token = Token
+      user.access_token = token
 
       response.json(user)
     }
     catch (e) {
-      response.status(401).json({ error: "No such user or password"})
+      response.status(401).json({ error: "No such user or password" })
     }
   }
 
