@@ -11,8 +11,7 @@ class TopicController {
   }
 
   * index (request, response) {
-    let topicId = request.param('topic_id')
-    let topics = yield Topic.findBy('topic_id', topicId)
+    let topics = yield Topic.query().select('title', 'url').orderBy('updated_at', 'desc')
 
     response.json(topics)
   }
