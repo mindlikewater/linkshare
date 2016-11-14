@@ -11,6 +11,9 @@ class User extends Lucid {
   apiTokens () {
     return this.hasMany(Token)
   }
+  topics () {
+    return this.hasMany('App/Model/Topic')
+  }
 }
 
 module.exports = User
