@@ -18,14 +18,15 @@ class CommentController {
   }
 
   * delete (request, response) {
-    let commentId = request.param('comment_id')
-    let comment = yield Comment.findBy('comment_id', commentId)
+    let topicId = request.param('topic_id')
+    let comments = yield Topic.query().where('topic_id', topicId)
+    let delComment = yield Topic.query().where(topicId, 'comments')
 
-    if (!comment) {
+    if (!delComment) {
       response.status(404).json({ error: "Comment not found" })
     }
     else {
-      yield comment.del()
+      delComment = yield Topic.query().where(topicId, 'comments').del()
       response.status(204).json({ success: "Comment successfully deleted" })
     }
   }
