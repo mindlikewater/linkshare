@@ -7,7 +7,7 @@ class CommentController {
       let data = request.only('topic_id', 'user_comment')
       let newComment = yield Comment.create(data)
 
-      response.status(201).json(comment)
+      response.status(201).json(newComment)
   }
 
   * index (request, response) {
