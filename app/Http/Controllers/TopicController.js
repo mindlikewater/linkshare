@@ -17,14 +17,15 @@ class TopicController {
   }
 
   * delete (request, response) {
-    let topicId = request.param('topic_id')
-    let topic = yield Topic.findBy('topic_id', topicId)
+    let userId = request.param('user_id')
+    let topics = yield Topic.findBy('user_id', userId)
+    let eraseTopic = yield Topic.query().where(userId, 'topics')
 
-    if (!topic) {
+    if (!eraseTopic) {
       response.status(404).json({ error: "Topic not found" })
     }
     else {
-      yield topic.del()
+      eraseTopic = yield Topic.query().where(userId, 'topics').del()
       response.status(204).json({ success: "Topic successfully deleted" })
     }
   }
