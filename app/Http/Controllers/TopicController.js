@@ -17,20 +17,14 @@ class TopicController {
   }
 
   * delete (request, response) {
-    //user must be logged in to delete topic links
-    let user = request.authUser
     let topicId = request.param('topic_id')
     let topic = yield Topic.findBy('topic_id', topicId)
 
-    if (!user) {
-      response.status(403).json({ error: "Unauthorized user" })
-    }
-    else if (!topic) {
+    if (!topic) {
       response.status(404).json({ error: "Topic not found" })
     }
     else {
       yield topic.del()
-
       response.status(204).json({ success: "Topic successfully deleted" })
     }
   }
