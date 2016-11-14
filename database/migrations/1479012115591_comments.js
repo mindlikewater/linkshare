@@ -11,8 +11,8 @@ class CommentsTableSchema extends Schema {
       table.string('user_comment')
       table.integer('user_id')
       table.foreign('user_id').references('users.id')
-      table.intger('topics_id')
-      table.foreign('topics_id').references('topics.id')
+      table.integer('topic_id')
+      table.foreign('topic_id').references('topics.id')
     })
   }
 
