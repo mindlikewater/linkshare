@@ -29,4 +29,4 @@ Route.delete('/topics/:topic_id', 'TopicController.delete').middleware('auth')
 
 Route.post('/comments', 'CommentController.create').middleware('auth')
 Route.get('/topics/:topic_id/comments', 'CommentController.index')
-Route.delete('/topics/:topic_id/comments/:comment_id', 'CommentController.delete').middleware('auth')
+Route.delete('/comments/:comment_id', 'CommentController.delete').middleware('auth')
