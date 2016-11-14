@@ -15,12 +15,11 @@ class UserController {
   * login (request, response) {
     //get username and password from user
     let data = request.only('username', 'password')
+    //find user by username in the database
+    let user = yield User.findBy('username', data.username)
+    //console.log(user, data.username)
 
     try {
-      //find user by username in the database
-      let user = yield User.findBy('username', data.username)
-      //console.log(user, data.username)
-
       //Note: If user is null, this TypeErrors, which is caught below.
       //Verify that the password given by the user matches the password in the database
       let verify = yield Hash.verify(data.password, user.password)
