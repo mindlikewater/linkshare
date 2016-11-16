@@ -18,16 +18,16 @@ class CommentController {
   }
 
   * delete (request, response) {
-    let topicId = request.param('topic_id')
-    let comments = yield Topic.query().where('topic_id', topicId)
-    let delComment = yield Topic.query().where(topicId, 'comments')
+    let user = request.auth.getUser()
+    let commentId = request.param('comment_id')
+    let delComment = yield Topic.query().where('id', commentId)
 
-    if (!delComment) {
-      response.status(404).json({ error: "Comment not found" })
+    if (user.id === comment.user_id) {
+      comment = yield Topic.query().where('id', commentId).del()
+      response.status(204).json({ success: "Comment successfully deleted" })
     }
     else {
-      delComment = yield Topic.query().where(topicId, 'comments').del()
-      response.status(204).json({ success: "Comment successfully deleted" })
+      response.status(404).json({ error: "Comment not found" })
     }
   }
 }
